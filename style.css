@@ -1,1 +1,195 @@
+/* Estilos Base para Escritorio y Móvil */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
 
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+}
+
+/* Estilos de Navegación */
+nav {
+    background-color: #444;
+    padding: 0.5em 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a, .dropdown-toggle {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #555;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
+    top: 100%;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #666;
+}
+
+/* Estilos de Contenido Principal */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Elementos de Formulario y Resultado */
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.section-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.section-buttons button {
+    margin: 10px;
+    padding: 15px 25px;
+    font-size: 18px;
+}
+        
+.hidden {
+    display: none !important;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#resultado {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    font-weight: bold;
+}
+
+
+/* ======================================= */
+/* 📱 Diseño Responsivo para Móviles 📱 */
+/* ======================================= */
+
+/* Aplicar estos estilos cuando la pantalla es de 600px o menos */
+@media (max-width: 600px) {
+    
+    /* Cuerpo y Contenido Principal */
+    body {
+        font-size: 16px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    main {
+        margin: 10px;
+        padding: 10px;
+        box-shadow: none; /* Eliminar sombra en móviles para un look más nativo */
+    }
+
+    /* Navegación y Menú (mejorar toque en móvil) */
+    nav ul {
+        justify-content: space-around; /* Distribuir uniformemente */
+    }
+
+    nav ul li a, .dropdown-toggle {
+        padding: 0.8em 0.5em;
+        font-size: 0.9em;
+    }
+
+    /* Botones más grandes para fácil toque */
+    .section-buttons {
+        flex-direction: column; /* Apilar los botones verticalmente */
+    }
+
+    .section-buttons button {
+        width: 90%; /* Ancho completo */
+        margin: 5px auto;
+        padding: 12px 20px;
+        font-size: 1.1em;
+    }
+
+    /* Resultados y Área de Texto */
+    textarea {
+        min-height: 80px;
+        font-size: 1em;
+    }
+
+    #resultado {
+        font-size: 0.9em;
+    }
+}
