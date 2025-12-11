@@ -3,7 +3,7 @@ body {
     font-family: Big Truck, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F1E4D1
+    background-color: #a2adff;
     color: #162660;
     line-height: 1.6;
 }
@@ -17,7 +17,7 @@ header {
 
 /* Estilos de Navegación */
 nav {
-    background-color: #D0E6FD;
+    background-color: #175698;
     padding: 0.5em 0;
 }
 
@@ -48,7 +48,7 @@ nav ul li a, .dropdown-toggle {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #555;
+    background-color: #16176d;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
@@ -68,7 +68,7 @@ nav ul li a, .dropdown-toggle {
 }
 
 .dropdown-content a:hover {
-    background-color: #666;
+    background-color: #717fd7;
 }
 
 /* Estilos de Contenido Principal */
