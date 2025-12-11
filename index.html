@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos de Ordenamiento Móvil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Algoritmos de Ordenamiento Interactivo</h1>
+    </header>
 
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showSection('main-menu')">Inicio</a></li>
+            <li class="dropdown">
+                <span class="dropdown-toggle">Menú</span>
+                <div class="dropdown-content">
+                    <a href="#" id="about-link" onclick="showSection('about')">Sobre Nosotros</a>
+                    <a href="#" id="return-link" class="hidden" onclick="showSection('main-menu')">Regresar a Principal</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="main-menu">
+            <h2>Selecciona un Algoritmo</h2>
+            <div class="section-buttons">
+                <button onclick="selectAlgorithm('seleccion')">Selección</button>
+                <button onclick="selectAlgorithm('burbuja')">Burbuja</button>
+                <button onclick="selectAlgorithm('insercion')">Inserción</button>
+            </div>
+        </section>
+
+        <section id="data-type-selection" class="hidden">
+            <h2>Algoritmo de <span id="algorithm-name"></span>: Elige el Tipo de Dato</h2>
+            <div class="section-buttons">
+                <button onclick="selectDataType('numerico')">Numérico</button>
+                <button onclick="selectDataType('alfabetico')">Alfabético</button>
+            </div>
+            <button onclick="showSection('main-menu')">Volver al Inicio</button>
+        </section>
+
+        <section id="sorting-interface" class="hidden">
+            <h2>Ordenamiento <span id="type-name"></span> por <span id="alg-interface-name"></span></h2>
+            
+            <div class="input-group">
+                <label for="input-list">Ingresa una lista (separa por comas):</label>
+                <textarea id="input-list" 
+                          placeholder="Ejemplo Numérico: 5, 2, 8, 1, 9&#10;Ejemplo Alfabético: manzana, pera, kiwi, uva"
+                          oninput="restrictInput(event)"
+                          onkeydown="handleKeyDown(event)"></textarea>
+                <small id="input-feedback" style="color: red;"></small>
+            </div>
+
+            <div class="section-buttons">
+                <button onclick="sortList('ascendente')">Ordenar Ascendente</button>
+                <button onclick="sortList('descendente')">Ordenar Descendente</button>
+            </div>
+            
+            <h3>Lista Ordenada:</h3>
+            <div id="resultado">Esperando entrada...</div>
+
+            <button onclick="showSection('data-type-selection')">Volver a Tipo de Dato</button>
+        </section>
+
+        <section id="about" class="hidden">
+            <h2>Sobre Nosotros ℹ️</h2>
+            <p>Este proyecto fue creado para demostrar y comparar el funcionamiento de tres algoritmos de ordenamiento.</p>
+            <p>Implementado con diseño responsivo para dispositivos móviles.</p>
+            <button onclick="showSection('main-menu')">Regresar a Principal</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
