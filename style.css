@@ -1,23 +1,27 @@
 /* Estilos Base para Escritorio y Móvil */
+
 body {
-    font-family: Big Truck, sans-serif;
+    font-family: quicksand, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #a2adff;
-    color: #162660;
+    background-color: #93a8ba;
+    color: #333;
     line-height: 1.6;
 }
 
 header {
     background-color: #162660;
+    font:'inter';
     color: white;
+    font-size: 20px;
+    font-weight: 300;
     padding: 1em 0;
     text-align: center;
 }
 
 /* Estilos de Navegación */
 nav {
-    background-color: #175698;
+    background-color: #3e4c79;
     padding: 0.5em 0;
 }
 
@@ -44,11 +48,11 @@ nav ul li a, .dropdown-toggle {
     cursor: pointer;
 }
 
-/* Dropdown */
-.dropdown-content {
+/* Menú Desplegable */
+.dropdown-content {/*cambiar*/
     display: none;
     position: absolute;
-    background-color: #16176d;
+    background-color: #3e4c79;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
@@ -62,13 +66,12 @@ nav ul li a, .dropdown-toggle {
 .dropdown-content a {
     color: white;
     padding: 12px 16px;
-    text-decoration: none;
     display: block;
     text-align: left;
 }
 
 .dropdown-content a:hover {
-    background-color: #717fd7;
+    background-color: #90a4e7;
 }
 
 /* Estilos de Contenido Principal */
@@ -79,13 +82,14 @@ main {
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 8px;
+    text-align: center;
 }
 
-/* Elementos de Formulario y Resultado */
+/* Botones y Formulario */
 button {
     padding: 10px 15px;
     margin: 5px;
-    background-color: #007bff;
+    background-color: #1e3a8a;
     color: white;
     border: none;
     border-radius: 5px;
@@ -95,7 +99,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #90a4e7;
 }
 
 .section-buttons {
@@ -128,7 +132,7 @@ textarea {
     border-radius: 4px;
 }
 
-#resultado {
+#resultado-ordenado {
     margin-top: 20px;
     padding: 15px;
     background-color: #e9ecef;
@@ -139,14 +143,10 @@ textarea {
 }
 
 
-/* ======================================= */
-/* 📱 Diseño Responsivo para Móviles 📱 */
-/* ======================================= */
+/* Diseño Celular */
 
-/* Aplicar estos estilos cuando la pantalla es de 600px o menos */
 @media (max-width: 600px) {
     
-    /* Cuerpo y Contenido Principal */
     body {
         font-size: 16px;
     }
@@ -158,12 +158,12 @@ textarea {
     main {
         margin: 10px;
         padding: 10px;
-        box-shadow: none; /* Eliminar sombra en móviles para un look más nativo */
+        box-shadow: none;
     }
 
-    /* Navegación y Menú (mejorar toque en móvil) */
+    /* Navegación y Menú */
     nav ul {
-        justify-content: space-around; /* Distribuir uniformemente */
+        justify-content: space-around;
     }
 
     nav ul li a, .dropdown-toggle {
@@ -171,25 +171,24 @@ textarea {
         font-size: 0.9em;
     }
 
-    /* Botones más grandes para fácil toque */
+    /* Apilar botones verticalmente en móvil */
     .section-buttons {
-        flex-direction: column; /* Apilar los botones verticalmente */
+        flex-direction: column;
     }
 
     .section-buttons button {
-        width: 90%; /* Ancho completo */
+        width: 90%;
         margin: 5px auto;
         padding: 12px 20px;
         font-size: 1.1em;
     }
 
-    /* Resultados y Área de Texto */
     textarea {
         min-height: 80px;
         font-size: 1em;
     }
 
-    #resultado {
+    #resultado-ordenado {
         font-size: 0.9em;
     }
 }
