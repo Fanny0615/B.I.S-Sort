@@ -1,227 +1,232 @@
 // Variables de estado
-let currentAlgorithm = '';
-let currentDataType = '';
-const inputList = document.getElementById('input-list');
-const feedback = document.getElementById('input-feedback');
+let algoritmoActual = '';
+let tipoDatoActual = '';
+const listaEntrada = document.getElementById('lista-entrada');
+const retroalimentacion = document.getElementById('retroalimentacion-entrada');
+const resultadoDiv = document.getElementById('resultado-ordenado');
+
 
 // Función central para cambiar de "página" (sección)
-function showSection(sectionId) {
+function mostrarSeccion(idSeccion) {
     // Oculta todas las secciones
-    document.getElementById('main-menu').classList.add('hidden');
-    document.getElementById('data-type-selection').classList.add('hidden');
-    document.getElementById('sorting-interface').classList.add('hidden');
-    document.getElementById('about').classList.add('hidden');
+    document.getElementById('menu-principal').classList.add('hidden');
+    document.getElementById('seleccion-tipo-dato').classList.add('hidden');
+    document.getElementById('interfaz-ordenamiento').classList.add('hidden');
+    document.getElementById('acerca-de').classList.add('hidden');
     
     // Muestra solo la sección deseada
-    document.getElementById(sectionId).classList.remove('hidden');
+    document.getElementById(idSeccion).classList.remove('hidden');
 
-    // Lógica para el botón "Regresar a Principal" en el menú desplegable
-    const returnLink = document.getElementById('return-link');
-    if (sectionId !== 'main-menu') {
-        returnLink.classList.remove('hidden');
+    // Lógica para el botón "Regresar a Principal"
+    const enlaceRegresar = document.getElementById('enlace-regresar');
+    if (idSeccion !== 'menu-principal') {
+        enlaceRegresar.classList.remove('hidden');
     } else {
-        returnLink.classList.add('hidden');
+        enlaceRegresar.classList.add('hidden');
     }
 }
 
 // 1. Selecciona el Algoritmo
-function selectAlgorithm(alg) {
-    currentAlgorithm = alg;
-    document.getElementById('algorithm-name').textContent = alg.charAt(0).toUpperCase() + alg.slice(1);
-    showSection('data-type-selection');
+function seleccionarAlgoritmo(alg) {
+    algoritmoActual = alg;
+    document.getElementById('nombre-algoritmo').textContent = alg.charAt(0).toUpperCase() + alg.slice(1);
+    mostrarSeccion('seleccion-tipo-dato');
 }
 
 // 2. Selecciona el Tipo de Dato
-function selectDataType(type) {
-    currentDataType = type;
-    document.getElementById('alg-interface-name').textContent = currentAlgorithm.charAt(0).toUpperCase() + currentAlgorithm.slice(1);
-    document.getElementById('type-name').textContent = type.charAt(0).toUpperCase() + type.slice(1);
+function seleccionarTipoDato(tipo) {
+    tipoDatoActual = tipo;
+    document.getElementById('nombre-alg-interfaz').textContent = algoritmoActual.charAt(0).toUpperCase() + algoritmoActual.slice(1);
+    document.getElementById('nombre-tipo').textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
     
     // Limpieza de interfaz al cambiar de tipo
-    inputList.value = ''; 
-    feedback.textContent = ''; // Limpia el mensaje de error de restricción
-    document.getElementById('resultado').textContent = 'Esperando entrada...';
+    listaEntrada.value = ''; 
+    retroalimentacion.textContent = '';
+    resultadoDiv.textContent = 'Esperando entrada...';
     
-    showSection('sorting-interface');
+    mostrarSeccion('interfaz-ordenamiento');
 }
 
 // --- FUNCIONES DE RESTRICCIÓN DE ENTRADA ---
 
-// 3. Restringe la entrada en tiempo real (al escribir o pegar)
-function restrictInput(event) {
-    if (currentDataType === '') return;
+function restringirEntrada(evento) {
+    if (tipoDatoActual === '') return;
 
-    const textarea = event.target;
-    let value = textarea.value;
-    let newValue = '';
-    let invalidCharFound = false;
+    const textarea = evento.target;
+    let valor = textarea.value;
+    let nuevoValor = '';
+    let caracterInvalidoEncontrado = false;
 
-    // Patrón: Solo dígitos, comas y espacios.
-    const numericPattern = /[0-9,\s-]/; 
-    // Patrón: Solo letras, comas y espacios. (Acentuación incluida)
-    const alphabeticPattern = /[a-zA-ZáéíóúÁÉÍÓÚñÑ,\s]/; 
+    const patronNumerico = /[0-9,\s-]/; 
+    const patronAlfabetico = /[a-zA-ZáéíóúÁÉÍÓÚñÑ,\s]/; 
 
-    for (let i = 0; i < value.length; i++) {
-        const char = value[i];
+    for (let i = 0; i < valor.length; i++) {
+        const caracter = valor[i];
+        let esValido = false;
         
-        let isValid = false;
-        
-        if (currentDataType === 'numerico') {
-            isValid = numericPattern.test(char);
-        } else if (currentDataType === 'alfabetico') {
-            isValid = alphabeticPattern.test(char);
+        if (tipoDatoActual === 'numerico') {
+            esValido = patronNumerico.test(caracter);
+        } else if (tipoDatoActual === 'alfabetico') {
+            esValido = patronAlfabetico.test(caracter);
         }
 
-        if (isValid) {
-            newValue += char;
+        if (esValido) {
+            nuevoValor += caracter;
         } else {
-            invalidCharFound = true;
+            caracterInvalidoEncontrado = true;
         }
     }
 
-    if (invalidCharFound) {
-        if (currentDataType === 'numerico') {
-            feedback.textContent = '⛔ Solo se permiten números, comas, guiones y espacios.';
-        } else {
-            feedback.textContent = '⛔ Solo se permiten letras, comas y espacios.';
-        }
-    } else {
-        feedback.textContent = '';
-    }
 
-    textarea.value = newValue;
+    textarea.value = nuevoValor;
 }
 
-// 4. Maneja la pulsación de teclas (evita que se muestre el carácter no válido)
-function handleKeyDown(event) {
-    if (currentDataType === '') return;
+function manejarTecla(evento) {
+    if (tipoDatoActual === '') return;
 
-    const key = event.key;
-    const isControlKey = key === 'Backspace' || key === 'Delete' || key === 'ArrowLeft' || key === 'ArrowRight' || event.ctrlKey || event.metaKey;
+    const tecla = evento.key;
+    const esTeclaControl = tecla === 'Backspace' || tecla === 'Delete' || tecla === 'ArrowLeft' || tecla === 'ArrowRight' || evento.ctrlKey || evento.metaKey;
 
-    if (isControlKey) return;
+    if (esTeclaControl) return;
 
-    // Permitir comas y espacios en ambos modos
-    if (key === ',' || key === ' ') return;
+    if (tecla === ',' || tecla === ' ') return;
 
-    let isValid = false;
+    let esValido = false;
 
-    if (currentDataType === 'numerico') {
-        // Permitir dígitos y guiones (para negativos)
-        if (/[0-9-]/.test(key)) {
-            isValid = true;
+    if (tipoDatoActual === 'numerico') {
+        if (/[0-9-]/.test(tecla)) {
+            esValido = true;
         }
-    } else if (currentDataType === 'alfabetico') {
-        // Permitir letras (incluyendo acentos y Ñ)
-        if (/[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(key)) {
-            isValid = true;
+    } else if (tipoDatoActual === 'alfabetico') {
+        if (/[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(tecla)) {
+            esValido = true;
         }
     }
 
-    if (!isValid) {
-        event.preventDefault(); // Detiene la acción de la tecla
+    if (!esValido) {
+        evento.preventDefault(); 
     }
 }
 
 
-// --- LÓGICA DE ORDENAMIENTO ---
+// --- LÓGICA DE ORDENAMIENTO DE ALGORITMOS PUROS ---
 
-function sortList(order) {
-    const input = inputList.value.trim();
-    let items = input.split(',').map(item => item.trim()).filter(item => item.length > 0);
-    let sortedArray = [];
+function ordenarLista(orden) {
+    const entrada = listaEntrada.value.trim();
+    let elementos = entrada.split(',').map(item => item.trim()).filter(item => item.length > 0);
+    let resultadoFinal = [];
     
-    if (items.length === 0) {
-        document.getElementById('resultado').textContent = 'Error: Por favor, ingresa elementos.';
+    if (elementos.length === 0) {
+        resultadoDiv.textContent = 'Error: Por favor, ingresa elementos.';
         return;
     }
 
-    // 3.1. Parsing y Validación final
-    if (currentDataType === 'numerico') {
-        const numbers = items.map(Number);
-        if (numbers.some(n => isNaN(n))) {
-            document.getElementById('resultado').textContent = 'Error: ¡Asegúrate de ingresar solo números válidos!';
+    let arr = [];
+    
+    // Parsing y Validación final
+    if (tipoDatoActual === 'numerico') {
+        const numeros = elementos.map(Number);
+        if (numeros.some(n => isNaN(n))) {
+            resultadoDiv.textContent = 'Error: ¡Asegúrate de ingresar solo números válidos!';
             return;
         }
-        sortedArray = numbers;
-    } else if (currentDataType === 'alfabetico') {
-        sortedArray = items;
+        arr = numeros;
+    } else if (tipoDatoActual === 'alfabetico') {
+        arr = elementos;
     }
 
-    // 3.2. Aplicación del Algoritmo
-    switch (currentAlgorithm) {
+    // Aplicación del Algoritmo
+    switch (algoritmoActual) {
         case 'seleccion':
-            sortedArray = selectionSort(sortedArray, order);
+            resultadoFinal = ordenamientoSeleccion(arr, orden);
             break;
         case 'burbuja':
-            sortedArray = bubbleSort(sortedArray, order);
+            resultadoFinal = ordenamientoBurbuja(arr, orden);
             break;
         case 'insercion':
-            sortedArray = insertionSort(sortedArray, order);
+            resultadoFinal = ordenamientoInsercion(arr, orden);
             break;
     }
     
-    // 3.3. Mostrar Resultado
-    const resultText = sortedArray.join(', ');
-    document.getElementById('resultado').textContent = resultText;
+    // Mostrar Resultado
+    const textoResultado = resultadoFinal.join(', ');
+    resultadoDiv.textContent = textoResultado;
 }
 
+
 // Función de comparación genérica
-function compare(a, b, order) {
-    if (order === 'ascendente') {
+function comparar(a, b, orden) {
+    if (orden === 'ascendente') {
         return a > b;
-    } else { // descendente
+    } else { 
         return a < b;
     }
 }
 
-// Implementaciones de los Algoritmos (sin cambios importantes)
-function selectionSort(arr, order) {
+// 1. Ordenamiento por Selección
+function ordenamientoSeleccion(arr, orden) {
     const n = arr.length;
-    const newArr = [...arr];
+    const nuevoArr = [...arr];
+
     for (let i = 0; i < n - 1; i++) {
-        let extremumIndex = i;
+        let indiceExtremo = i;
+        
         for (let j = i + 1; j < n; j++) {
-            if (compare(newArr[extremumIndex], newArr[j], order)) {
-                extremumIndex = j;
+            if (comparar(nuevoArr[indiceExtremo], nuevoArr[j], orden)) {
+                indiceExtremo = j;
             }
         }
-        if (extremumIndex !== i) {
-            [newArr[i], newArr[extremumIndex]] = [newArr[extremumIndex], newArr[i]];
+
+        if (indiceExtremo !== i) {
+            // Intercambio
+            [nuevoArr[i], nuevoArr[indiceExtremo]] = [nuevoArr[indiceExtremo], nuevoArr[i]];
         }
     }
-    return newArr;
+    return nuevoArr;
 }
 
-function bubbleSort(arr, order) {
+// 2. Ordenamiento de Burbuja
+function ordenamientoBurbuja(arr, orden) {
     const n = arr.length;
-    const newArr = [...arr];
+    const nuevoArr = [...arr];
+    let intercambiado;
+
     for (let i = 0; i < n - 1; i++) {
+        intercambiado = false;
+
         for (let j = 0; j < n - 1 - i; j++) {
-            if (compare(newArr[j], newArr[j + 1], order)) {
-                [newArr[j], newArr[j + 1]] = [newArr[j + 1], newArr[j]];
+            if (comparar(nuevoArr[j], nuevoArr[j + 1], orden)) {
+                // Intercambio
+                [nuevoArr[j], nuevoArr[j + 1]] = [nuevoArr[j + 1], nuevoArr[j]];
+                intercambiado = true;
             }
         }
+        if (!intercambiado) break; 
     }
-    return newArr;
+    return nuevoArr;
 }
 
-function insertionSort(arr, order) {
+// 3. Ordenamiento por Inserción
+function ordenamientoInsercion(arr, orden) {
     const n = arr.length;
-    const newArr = [...arr];
+    const nuevoArr = [...arr];
+
     for (let i = 1; i < n; i++) {
-        let current = newArr[i];
+        let actual = nuevoArr[i];
         let j = i - 1;
-        while (j >= 0 && compare(newArr[j], current, order)) {
-            newArr[j + 1] = newArr[j];
+        
+        // Desplaza los elementos
+        while (j >= 0 && comparar(nuevoArr[j], actual, orden)) {
+            nuevoArr[j + 1] = nuevoArr[j];
             j--;
         }
-        newArr[j + 1] = current;
+        
+        nuevoArr[j + 1] = actual;
     }
-    return newArr;
+    return nuevoArr;
 }
 
 // Inicia mostrando el menú principal al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    showSection('main-menu');
+    mostrarSeccion('menu-principal');
 });
